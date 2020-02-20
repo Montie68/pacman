@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AddPoints : MonoBehaviour
+public class AddPoints : Pickup
 {
     // The Points to add the the players score.
     [SerializeField]
@@ -14,8 +14,9 @@ public class AddPoints : MonoBehaviour
         
     }
 
-    void OnTriggerEnter(Collider other)
+    public override void OnPickUp(int ID = 0)
     {
+        base.OnPickUp(ID);
         // Test if the collider is the player
         // if player add points to the Game manger.
 

@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Walls
+  - Enemies
+  - Pickup
   layers:
   - Default
   - TransparentFX
@@ -13,10 +16,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Walls
+  - Enemy
+  - Player
+  - Pickup
   - 
   - 
   - 
@@ -40,4 +43,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Walls
+    uniqueID: 1848465951
+    locked: 0
+  - name: Pickup
+    uniqueID: 911208561
+    locked: 0
+  - name: Player
+    uniqueID: 3102518843
+    locked: 0
+  - name: Enemies
+    uniqueID: 1517641767
     locked: 0

@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 1832988785578149073}
   - component: {fileID: 6993816349036567902}
   - component: {fileID: 7250934807948954793}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: pallet
-  m_TagString: Untagged
+  m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
