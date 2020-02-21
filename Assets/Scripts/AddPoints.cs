@@ -24,5 +24,6 @@ public class AddPoints : Pickup
 
         // ------------- remove after implemnetation --------------------- //
         Debug.Log("Yummy! Points Added:" + points);
+        Destroy(this.gameObject);
     }
 }
