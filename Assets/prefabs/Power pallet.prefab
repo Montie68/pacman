@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 7106841001307591658}
   - component: {fileID: 3522391684042672444}
   - component: {fileID: 1832988785578149073}
-  - component: {fileID: 5760079269563798008}
+  - component: {fileID: -2131281451623308192}
+  - component: {fileID: 6007379580761269617}
   m_Layer: 11
   m_Name: Power pallet
   m_TagString: Pickup
@@ -80,7 +81,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!58 &5760079269563798008
+--- !u!58 &-2131281451623308192
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -96,3 +97,15 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &6007379580761269617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144530117285220859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81179a4ced6d6a54db0d1b66e915811c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
