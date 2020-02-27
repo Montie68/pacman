@@ -100,6 +100,111 @@ TextureImporter:
     second: pacman tileset_15
   - first:
       213: -3366459676385603553
+    second: pacman mouth closed
+  - first:
+      213: -1806915236938447354
+    second: pacman mouth open part
+  - first:
+      213: -5533874891918717979
+    second: pacman mouth open full
+  - first:
+      213: 1015871711177490231
+    second: pacman death 1
+  - first:
+      213: -1922585045729272751
+    second: pacman death 2
+  - first:
+      213: -4859231876874032250
+    second: pacman death 3
+  - first:
+      213: -948662823501746405
+    second: pacman death 4
+  - first:
+      213: -3956624403193910466
+    second: pacman mouth closed
+  - first:
+      213: 3760962017908300827
+    second: pacman mouth open part
+  - first:
+      213: 6241636861908895443
+    second: pacman mouth open full
+  - first:
+      213: -1041542864669992999
+    second: pacman death 1
+  - first:
+      213: 1747397198794500454
+    second: pacman death 2
+  - first:
+      213: 3309196545280394693
+    second: pacman death 3
+  - first:
+      213: -1195809186329633734
+    second: pacman death 4
+  - first:
+      213: 1102030000296317458
+    second: Blinky R1
+  - first:
+      213: -2868419417965915724
+    second: Blinky R2
+  - first:
+      213: -2763256617346826880
+    second: Blinky D1
+  - first:
+      213: -979570028526501930
+    second: Blinky D2
+  - first:
+      213: 7083363336964885192
+    second: Blinky U1
+  - first:
+      213: 2696788645353033287
+    second: Blinky U2
+  - first:
+      213: -3956624403193910466
+    second: pacman tileset_16
+  - first:
+      213: 3760962017908300827
+    second: pacman tileset_17
+  - first:
+      213: 6241636861908895443
+    second: pacman tileset_18
+  - first:
+      213: -1041542864669992999
+    second: pacman tileset_19
+  - first:
+      213: 1747397198794500454
+    second: pacman tileset_20
+  - first:
+      213: 3309196545280394693
+    second: pacman tileset_21
+  - first:
+      213: -1195809186329633734
+    second: pacman tileset_22
+  - first:
+      213: -4011298129304832024
+    second: pacman tileset_23
+  - first:
+      213: 1785717581566249908
+    second: pacman tileset_24
+  - first:
+      213: -3702511121838229507
+    second: pacman tileset_25
+  - first:
+      213: 630539021481379786
+    second: pacman tileset_26
+  - first:
+      213: -6481231668091766067
+    second: pacman tileset_27
+  - first:
+      213: -6494690098421534231
+    second: pacman tileset_28
+  - first:
+      213: 3573241434486613400
+    second: pacman tileset_29
+  - first:
+      213: -2727705008200749572
+    second: pacman tileset_30
+  - first:
+      213: -3366459676385603553
     second: pacman tileset_16
   - first:
       213: -1806915236938447354
@@ -119,6 +224,54 @@ TextureImporter:
   - first:
       213: -948662823501746405
     second: pacman tileset_22
+  - first:
+      213: 1102030000296317458
+    second: pacman tileset_23
+  - first:
+      213: -2868419417965915724
+    second: pacman tileset_24
+  - first:
+      213: -2763256617346826880
+    second: pacman tileset_25
+  - first:
+      213: -979570028526501930
+    second: pacman tileset_26
+  - first:
+      213: 7083363336964885192
+    second: pacman tileset_27
+  - first:
+      213: 2696788645353033287
+    second: pacman tileset_28
+  - first:
+      213: 7842130019478110015
+    second: pacman tileset_29
+  - first:
+      213: -2424707909433849130
+    second: pacman tileset_30
+  - first:
+      213: -8794730695416056002
+    second: pacman tileset_31
+  - first:
+      213: -9177632133708920473
+    second: pacman tileset_32
+  - first:
+      213: -2746218855252720464
+    second: pacman tileset_33
+  - first:
+      213: 8870123772613812994
+    second: pacman tileset_34
+  - first:
+      213: 8522190737720159877
+    second: pacman tileset_35
+  - first:
+      213: 2895706749985068190
+    second: pacman tileset_36
+  - first:
+      213: -8290425887477384644
+    second: pacman tileset_37
+  - first:
+      213: -8655379619549767733
+    second: pacman tileset_38
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -753,6 +906,342 @@ TextureImporter:
       bones: []
       spriteID: b1f2f81303ca5d2f0800000000000000
       internalID: -948662823501746405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pacman tileset_23
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2125c7b42723b4f00800000000000000
+      internalID: 1102030000296317458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pacman tileset_24
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b11f45acb35138d0800000000000000
+      internalID: -2868419417965915724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pacman tileset_25
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08d7bc33fb0f6a9d0800000000000000
+      internalID: -2763256617346826880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pacman tileset_26
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6dffe01cf3ed762f0800000000000000
+      internalID: -979570028526501930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pacman tileset_27
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ca41dafc692d4260800000000000000
+      internalID: 7083363336964885192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pacman tileset_28
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74e03981cfaec6520800000000000000
+      internalID: 2696788645353033287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pacman tileset_29
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3f7b6d04b7d4dc60800000000000000
+      internalID: 7842130019478110015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pacman tileset_30
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6da8d16c005b95ed0800000000000000
+      internalID: -2424707909433849130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pacman tileset_31
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e37708c6707d2f580800000000000000
+      internalID: -8794730695416056002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pacman tileset_32
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 769c117133082a080800000000000000
+      internalID: -9177632133708920473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pacman tileset_33
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b48e21508873e9d0800000000000000
+      internalID: -2746218855252720464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pacman tileset_34
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 203e4644392091b70800000000000000
+      internalID: 8870123772613812994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pacman tileset_35
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58e2fedc257e44670800000000000000
+      internalID: 8522190737720159877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pacman tileset_36
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e949f8e62fd9f2820800000000000000
+      internalID: 2895706749985068190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pacman tileset_37
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3a3534749d72fc80800000000000000
+      internalID: -8290425887477384644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pacman tileset_38
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc7949c181ae1e780800000000000000
+      internalID: -8655379619549767733
       vertices: []
       indices: 
       edges: []

@@ -23,9 +23,13 @@ public class PlayerController : Actor
     [SerializeField]
     float FrontRaylength = 0.5f;
     public GameObject playerModel;
-    Vector3 Velocity = Vector3.zero;
+
     [HideInInspector]
     public bool isAlive = true;
+
+    Vector3 Velocity = Vector3.zero;
+    Vector3 playerStartPos;
+
     playerDirection direction;
     playerDirection nextDirection;
     playerDirection lastDirection;
@@ -34,7 +38,6 @@ public class PlayerController : Actor
     // List of Raycats Hits
     List<playerDirection> hits;
 
-    Vector3 playerStartPos;
 
     // Start is called before the first frame update
     void Start()
@@ -177,11 +180,12 @@ public class PlayerController : Actor
         { 
             hits.Add(playerDirection.DOWN);
         }
-
+        
         if (Physics2D.Raycast(pos, transform.TransformDirection(Vector3.left), FrontRaylength, layerMask) ||
             Physics2D.Raycast(pos, transform.TransformDirection(Vector3.up), FrontRaylength, layerMask) ||
             Physics2D.Raycast(pos, transform.TransformDirection(Vector3.right), FrontRaylength, layerMask) ||
-            Physics2D.Raycast(pos, transform.TransformDirection(Vector3.down), FrontRaylength, layerMask))
+            Physics2D.Raycast(pos, transform.TransformDirection(Vector3.down), FrontRaylength, layerMask)
+            && nextDirection == direction)
         {
             nextDirection = playerDirection.STOP;
         }
@@ -215,9 +219,9 @@ public class PlayerController : Actor
         }
         else if (direction == playerDirection.STOP && modelOrintation != playerDirection.STOP)
         {
-            playerModel.GetComponent<Animator>().SetBool("IsMoving", false);
-            playerModel.transform.localEulerAngles = new Vector3(0, 0, 0);
+            playerModel.GetComponent<Animator>().SetBool("isMoving", false);
             modelOrintation = playerDirection.STOP;
+            playerModel.GetComponent<Animator>().SetBool("isMoving", false);
 
         }
 
