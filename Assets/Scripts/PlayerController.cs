@@ -3,48 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum playerDirection
-{
-    STOP = 0,
-        LEFT,
-        RIGHT,
-        UP,
-        DOWN
-};
 public class PlayerController : Actor
 {
-    public float speed = 2f;
     [SerializeField]
     int lives = 3;
     [SerializeField]
     float speedBoost = 0.2f;
-    [SerializeField]
-    float raylength = 0.5f;
-    [SerializeField]
-    float FrontRaylength = 0.5f;
-    public GameObject playerModel;
 
     [HideInInspector]
     public bool isAlive = true;
 
-    Vector3 Velocity = Vector3.zero;
     Vector3 playerStartPos;
 
-    playerDirection direction;
-    playerDirection nextDirection;
-    playerDirection lastDirection;
-    playerDirection modelOrintation;
-
-    // List of Raycats Hits
-    List<playerDirection> hits;
 
 
     // Start is called before the first frame update
     void Start()
     {
         playerStartPos = transform.position;
-        direction = playerDirection.STOP;
-        hits = new List<playerDirection>();
+        direction = Directions.STOP;
+        hits = new List<Directions>();
     }
 
     // Update is called once per frame
@@ -52,7 +30,7 @@ public class PlayerController : Actor
     {
         castRays();
         getInput();
-        playerMovement();
+        ActorMovement();
         ChangePlayerOrintation();
     }
 
@@ -67,37 +45,37 @@ public class PlayerController : Actor
     public void PlayerDeath()
     {
         transform.position = playerStartPos;
-        direction = playerDirection.STOP;
+        direction = Directions.STOP;
     }
 
     void getInput()
     {
         if (Input.GetAxis("Horizontal") > 0) 
         {
-            nextDirection = playerDirection.RIGHT;
+            nextDirection = Directions.RIGHT;
         }
         else if (Input.GetAxis("Horizontal") < 0) 
         {
-            nextDirection = playerDirection.LEFT;
+            nextDirection = Directions.LEFT;
         }
         else if (Input.GetAxis("Vertical") > 0)
         {
-            nextDirection = playerDirection.UP;
+            nextDirection = Directions.UP;
         }
         else if (Input.GetAxis("Vertical") < 0)
         {
-            nextDirection = playerDirection.DOWN;
+            nextDirection = Directions.DOWN;
         }
     }
 
-    void playerMovement()
+    public override void ActorMovement()
     {
         if (Velocity.magnitude == 0)
         {
-            direction = playerDirection.STOP;
+            direction = Directions.STOP;
         }
         bool nextDirClear = true;
-        foreach(playerDirection pd in hits)
+        foreach(Directions pd in hits)
         {
             if (pd == nextDirection)
             { 
@@ -109,23 +87,23 @@ public class PlayerController : Actor
         if (nextDirClear)
             direction = nextDirection;
 
-        if (direction == playerDirection.LEFT)
+        if (direction == Directions.LEFT)
         {
             Velocity = Vector3.left * speed * Time.deltaTime;
         }
-        else if (direction == playerDirection.RIGHT)
+        else if (direction == Directions.RIGHT)
         {
             Velocity = Vector3.right * speed * Time.deltaTime;
         }
-        else if (direction == playerDirection.UP)
+        else if (direction == Directions.UP)
         {
             Velocity = Vector3.up * speed * Time.deltaTime;
         }
-        else if (direction == playerDirection.DOWN)
+        else if (direction == Directions.DOWN)
         {
             Velocity = Vector3.down * speed * Time.deltaTime;
         }
-        else if (direction == playerDirection.STOP)
+        else if (direction == Directions.STOP)
         {
             Velocity = Vector3.zero;
         }
@@ -138,89 +116,36 @@ public class PlayerController : Actor
         transform.Translate(Velocity);
 
     }
-    void castRays()
-    {
-        // Bit shift the index of the layer (8) to get a bit mask
-        int layerMask = 1 << 8;
-        hits = new List<playerDirection>();
-
-        Vector3 pos = transform.position;
-
-        if ( Physics2D.Raycast(pos + (Vector3.up * 0.4f), transform.TransformDirection(Vector3.left), raylength, layerMask) ||
-            Physics2D.Raycast(pos + (Vector3.down * 0.4f), transform.TransformDirection(Vector3.left), raylength, layerMask) ||
-            Physics2D.Raycast(pos + (Vector3.up * 0.2f), transform.TransformDirection(Vector3.left), raylength, layerMask) ||
-            Physics2D.Raycast(pos + (Vector3.down * 0.2f), transform.TransformDirection(Vector3.left), raylength, layerMask)  )
-        {
-            hits.Add(playerDirection.LEFT);
-        }
-
-        if (Physics2D.Raycast(pos, transform.TransformDirection(Vector3.right), raylength, layerMask) ||
-            Physics2D.Raycast(pos + (Vector3.up * 0.4f), transform.TransformDirection(Vector3.right), raylength, layerMask) ||
-            Physics2D.Raycast(pos + (Vector3.down * 0.4f), transform.TransformDirection(Vector3.right), raylength, layerMask) ||
-            Physics2D.Raycast(pos + (Vector3.up * 0.2f), transform.TransformDirection(Vector3.right), raylength, layerMask) ||
-            Physics2D.Raycast(pos + (Vector3.down * 0.2f), transform.TransformDirection(Vector3.right), raylength, layerMask))
-        {
-            hits.Add(playerDirection.RIGHT);
-        }
-
-        if (Physics2D.Raycast(pos, transform.TransformDirection(Vector3.up), raylength, layerMask) ||
-            Physics2D.Raycast(pos + (Vector3.left * 0.4f), transform.TransformDirection(Vector3.up), raylength, layerMask) ||
-            Physics2D.Raycast(pos + (Vector3.right * 0.4f), transform.TransformDirection(Vector3.up), raylength, layerMask) ||
-            Physics2D.Raycast(pos + (Vector3.left * 0.2f), transform.TransformDirection(Vector3.up), raylength, layerMask) ||
-            Physics2D.Raycast(pos + (Vector3.right * 0.2f), transform.TransformDirection(Vector3.up), raylength, layerMask))
-        {
-            hits.Add(playerDirection.UP); 
-        }
-
-        if (Physics2D.Raycast(pos, transform.TransformDirection(Vector3.down), raylength, layerMask) ||
-            Physics2D.Raycast(pos + (Vector3.left * 0.4f), transform.TransformDirection(Vector3.down), raylength, layerMask) ||
-            Physics2D.Raycast(pos + (Vector3.right * 0.4f), transform.TransformDirection(Vector3.down), raylength, layerMask) ||
-            Physics2D.Raycast(pos + (Vector3.left * 0.2f), transform.TransformDirection(Vector3.down), raylength, layerMask) ||
-            Physics2D.Raycast(pos + (Vector3.right * 0.2f), transform.TransformDirection(Vector3.down), raylength, layerMask))
-        { 
-            hits.Add(playerDirection.DOWN);
-        }
-        
-        if (Physics2D.Raycast(pos, transform.TransformDirection(Vector3.left), FrontRaylength, layerMask) ||
-            Physics2D.Raycast(pos, transform.TransformDirection(Vector3.up), FrontRaylength, layerMask) ||
-            Physics2D.Raycast(pos, transform.TransformDirection(Vector3.right), FrontRaylength, layerMask) ||
-            Physics2D.Raycast(pos, transform.TransformDirection(Vector3.down), FrontRaylength, layerMask)
-            && nextDirection == direction)
-        {
-            nextDirection = playerDirection.STOP;
-        }
-
-    }
 
     void ChangePlayerOrintation()
     {
-        if (direction == playerDirection.RIGHT && modelOrintation != playerDirection.RIGHT)
+        if (direction == Directions.RIGHT && modelOrintation != Directions.RIGHT)
         {
             playerModel.transform.localEulerAngles = new Vector3(0, 0, 0);
-            modelOrintation = playerDirection.RIGHT;
+            modelOrintation = Directions.RIGHT;
         }
-        else if (direction == playerDirection.LEFT && modelOrintation != playerDirection.LEFT)
+        else if (direction == Directions.LEFT && modelOrintation != Directions.LEFT)
         {
             playerModel.transform.localEulerAngles = new Vector3(0, 0, 0);
             playerModel.transform.Rotate(0, 0, -180);
-            modelOrintation = playerDirection.LEFT;
+            modelOrintation = Directions.LEFT;
         }
-        else if (direction == playerDirection.UP && modelOrintation != playerDirection.UP)
+        else if (direction == Directions.UP && modelOrintation != Directions.UP)
         {
             playerModel.transform.localEulerAngles = new Vector3(0, 0, 0);
             playerModel.transform.Rotate(0, 0, 90);
-            modelOrintation = playerDirection.UP;
+            modelOrintation = Directions.UP;
         }
-        else if (direction == playerDirection.DOWN && modelOrintation != playerDirection.DOWN)
+        else if (direction == Directions.DOWN && modelOrintation != Directions.DOWN)
         {
             playerModel.transform.localEulerAngles = new Vector3(0, 0, 0);
             playerModel.transform.Rotate(0, 0, -90);
-            modelOrintation = playerDirection.DOWN;
+            modelOrintation = Directions.DOWN;
         }
-        else if (direction == playerDirection.STOP && modelOrintation != playerDirection.STOP)
+        else if (direction == Directions.STOP && modelOrintation != Directions.STOP)
         {
             playerModel.GetComponent<Animator>().SetBool("isMoving", false);
-            modelOrintation = playerDirection.STOP;
+            modelOrintation = Directions.STOP;
             playerModel.GetComponent<Animator>().SetBool("isMoving", false);
 
         }
@@ -228,7 +153,7 @@ public class PlayerController : Actor
 
     }
 
-    public override void ChangeDirection(playerDirection _direction)
+    public override void ChangeDirection(Directions _direction)
     {
         direction = _direction;
     }

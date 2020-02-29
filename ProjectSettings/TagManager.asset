@@ -7,6 +7,8 @@ TagManager:
   - Walls
   - Enemies
   - Pickup
+  - Trigger
+  - gate
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - Enemy
   - Player
   - Pickup
-  - 
+  - Triggers
   - 
   - 
   - 
@@ -43,6 +45,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Trigers
+    uniqueID: 2463928661
     locked: 0
   - name: Walls
     uniqueID: 1848465951

@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class BoxCast2D : MonoBehaviour
 {
-    public List<playerDirection> directions;
+    public List<Directions> directions;
 
     private void Start()
     {
-        directions = new List<playerDirection>();
+        directions = new List<Directions>();
 
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        directions = new List<playerDirection>();
+        directions = new List<Directions>();
 
         if (collision.gameObject.layer == 8)
         {
             Debug.Log("touch");
         }
     }
-    public List<playerDirection> FreeDirections()
+    public List<Directions> FreeDirections()
     {
         return directions;
     }

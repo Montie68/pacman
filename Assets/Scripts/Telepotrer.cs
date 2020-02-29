@@ -8,13 +8,13 @@ public class Telepotrer : MonoBehaviour
     GameObject destination = null;
     Vector3 destinationPos;
     [SerializeField]
-    playerDirection exitDirection = playerDirection.STOP;
+    Directions exitDirection = Directions.STOP;
 
     void Start()
     {
         destinationPos = destination.transform.position;
         int offset = 1;
-        if (exitDirection == playerDirection.RIGHT) offset = -1;
+        if (exitDirection == Directions.RIGHT) offset = -1;
 
         destinationPos.x += offset;
         destinationPos.z = 0;
