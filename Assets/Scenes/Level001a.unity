@@ -20239,9 +20239,12 @@ MonoBehaviour:
   - 0.2
   - 0.35
   target: {x: 0, y: 0}
-  Player: {fileID: 1790805268}
+  scatterTarget: {x: 6.5, y: 8.5}
+  ghostHouse: {x: 0, y: 0}
+  player: {fileID: 1790805268}
   targetCoords: {x: 0, y: 0}
   routesToTarget: 
+  hasTurned: 0
   state: 0
 --- !u!95 &2070758367
 Animator:

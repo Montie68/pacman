@@ -8,7 +8,7 @@ public class Blinky : Ghost
     void Start()
     {
         castRays();
-        GetRouteToTarget(new List<Directions>() {Directions.LEFT, Directions.RIGHT });
+        GetRouteToTarget((Vector2)transform.position, new List<Directions>() {Directions.LEFT, Directions.RIGHT } );
 
     }
 
@@ -20,11 +20,11 @@ public class Blinky : Ghost
     }
 
     
-    public override void GetRouteToTarget(List<Directions> dirs = null)
+    public override void GetRouteToTarget(Vector2 pos, List<Directions> dirs = null)
     {
-        target = (Vector2)Player.transform.position + targetCoords;
+        target = (Vector2)player.transform.position + targetCoords;
 
-        base.GetRouteToTarget(dirs);
+        base.GetRouteToTarget(pos, dirs);
 
     }
 }
