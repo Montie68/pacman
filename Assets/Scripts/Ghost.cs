@@ -173,7 +173,16 @@ public abstract class Ghost : Actor
             GetRouteToTarget((Vector2)transform.position, other.gameObject.GetComponent<triggerDir>().directions);
         }
     }
-
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 10 )
+        {
+            if(state == GhostState.FLEEING)
+            {
+                state = GhostState.EATEN;
+            }
+        }
+    }
     public override void ActorMovement()
     {
         base.ActorMovement();
