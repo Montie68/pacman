@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3522391684042672444}
   - component: {fileID: 1832988785578149073}
   - component: {fileID: -2131281451623308192}
-  - component: {fileID: 6007379580761269617}
+  - component: {fileID: 8243725827651324237}
   m_Layer: 11
   m_Name: Power pallet
   m_TagString: Pickup
@@ -97,7 +97,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &6007379580761269617
+--- !u!114 &8243725827651324237
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,6 +106,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1144530117285220859}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81179a4ced6d6a54db0d1b66e915811c, type: 3}
+  m_Script: {fileID: 11500000, guid: a20a0d3563cb17141a9f4f1a2210980e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

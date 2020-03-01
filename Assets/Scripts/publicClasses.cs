@@ -10,16 +10,9 @@ public enum Directions
 };
 public enum GhostState
 {
-       HUNTING,
+       CHASING,
        SCATTER,
        FLEEING,
        EATEN,
 };
 
-public class List2D<T, U>
-{
-    public T item1;
-    public U item2;
-
-
-}

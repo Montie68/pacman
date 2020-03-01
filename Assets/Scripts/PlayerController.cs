@@ -171,7 +171,7 @@ public class PlayerController : Actor
         int layer =  11;
         if (collision.gameObject.layer == layer)
         {
-            collision.GetComponent<Pickup>().OnPickUp(0);
+            collision.GetComponent<Pickup>().OnPickUp();
         }
     }
 

@@ -12,11 +12,11 @@ public abstract class Actor : MonoBehaviour
     public bool isTeleporting = false;
 
     // List of Raycats Hits
-   // [HideInInspector]
+    [HideInInspector]
     public List<Directions> hits;
     public GameObject playerModel;
 
-    //[HideInInspector]
+    [HideInInspector]
     public Directions direction;
     [HideInInspector]
     public Directions nextDirection;
