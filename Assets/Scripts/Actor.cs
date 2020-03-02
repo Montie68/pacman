@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class Actor : MonoBehaviour
 {
     public float raylength = 0.5f;
     public float FrontRaylength = 0.5f;
     public float speed = 2f;
-
+    [HideInInspector]
+    public UnityEvent unityEvent = new UnityEvent();
     [HideInInspector]
     public bool isTeleporting = false;
 

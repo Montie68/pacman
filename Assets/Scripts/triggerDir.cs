@@ -31,23 +31,19 @@ public class triggerDir : MonoBehaviour
 
     IEnumerator Deley(GameObject col, Ghost ghost)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         col.GetComponent<Animator>().SetBool("IsEaten", false);
         col.GetComponent<Animator>().SetBool("IsFleeing", false);
         col.GetComponent<Actor>().nextDirection = Directions.UP;
-        col.GetComponent<Actor>().direction = Directions.UP;
         col.GetComponent<Ghost>().state = GhostState.SCATTER;
 
         yield return new WaitForSeconds(1);
         col.GetComponent<Ghost>().state = GhostState.CHASING;
 
-        // ------------------- Testing only remove after completion of test ---------------------------//
-        StartCoroutine(col.GetComponent<Ghost>().GhostActions());
-
     }
     void OnTriggerExit2D(Collider2D collision)
     {
-        if (directions.Count != BackUpDirs.Count)
+        if (directions != BackUpDirs)
         {
             directions = new List<Directions>();
             foreach (Directions d in BackUpDirs)

@@ -31,25 +31,10 @@ public class Blinky : Ghost
 
     public override IEnumerator GhostActions()
     {
-        while(true)
-        {
-            if ((this.state != GhostState.FLEEING) && (this.state != GhostState.EATEN))
-            {
-                if (timer < 20)
-                    this.state = GhostState.CHASING;
-                else if (timer > 20 && timer < 28) this.state = GhostState.SCATTER;
-                else if (timer > 28 && timer < 48) this.state = GhostState.CHASING;
-                else if (timer < 48 && timer < 55) this.state = GhostState.SCATTER;
-                else if (timer > 55 && timer < 75) this.state = GhostState.CHASING;
-                else if (timer > 75 && timer < 80) this.state = GhostState.SCATTER;
-                else if (timer > 80 && timer < 100) this.state = GhostState.CHASING;
-                else if (timer > 100 && timer < 105) this.state = GhostState.SCATTER;
-                else if (timer > 105) this.state = GhostState.CHASING;
-            }
-            // Check game state to check if the level has ended.
-            yield return new WaitForSeconds(0.3333f);
-        }
-       // yield return null;
+      
+        base.GhostActions();
+
+        yield return null;
     }
 
 

@@ -9,9 +9,11 @@ public class PlayerController : Actor
     int lives = 3;
     [SerializeField]
     float speedBoost = 0.2f;
-
     [HideInInspector]
     public bool isAlive = true;
+
+    [HideInInspector]
+    public bool isBoosted = false;
 
     Vector3 playerStartPos;
 
@@ -23,6 +25,19 @@ public class PlayerController : Actor
         playerStartPos = transform.position;
         direction = Directions.STOP;
         hits = new List<Directions>();
+    }
+
+    public IEnumerator Boosted()
+    {
+        float timer = 7;
+        float interval = 0.16667f;
+        isBoosted = true;
+        while (timer > 0)
+        {
+            yield return new WaitForSeconds(interval);
+            timer -= interval;
+        }
+        isBoosted = false;
     }
 
     // Update is called once per frame
@@ -70,6 +85,17 @@ public class PlayerController : Actor
 
     public override void ActorMovement()
     {
+        float _speed;
+
+        if (isBoosted)
+        { 
+            _speed = speed + speedBoost;
+        }
+        else
+        {
+            _speed = speed;
+        }
+
         if (Velocity.magnitude == 0)
         {
             direction = Directions.STOP;
@@ -89,19 +115,19 @@ public class PlayerController : Actor
 
         if (direction == Directions.LEFT)
         {
-            Velocity = Vector3.left * speed * Time.deltaTime;
+            Velocity = Vector3.left * _speed * Time.deltaTime;
         }
         else if (direction == Directions.RIGHT)
         {
-            Velocity = Vector3.right * speed * Time.deltaTime;
+            Velocity = Vector3.right * _speed * Time.deltaTime;
         }
         else if (direction == Directions.UP)
         {
-            Velocity = Vector3.up * speed * Time.deltaTime;
+            Velocity = Vector3.up * _speed * Time.deltaTime;
         }
         else if (direction == Directions.DOWN)
         {
-            Velocity = Vector3.down * speed * Time.deltaTime;
+            Velocity = Vector3.down * _speed * Time.deltaTime;
         }
         else if (direction == Directions.STOP)
         {

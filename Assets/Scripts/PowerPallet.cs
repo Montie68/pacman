@@ -10,8 +10,13 @@ public class PowerPallet : Pickup
         Ghost[] ghosts = FindObjectsOfType<Ghost>();
         foreach(Ghost g in ghosts)
         {
-            g.state = GhostState.FLEEING;
+            if (g.state != GhostState.EATEN) {
+                g.state = GhostState.FLEEING;
+                g.fleeTimer = 7;
+                    }
         }
+        PlayerController player = FindObjectOfType<PlayerController>();
+        StartCoroutine(player.Boosted());
         Destroy(this.gameObject);
     }
 }

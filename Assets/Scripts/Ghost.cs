@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class Ghost : Actor
 {
@@ -44,17 +45,18 @@ public abstract class Ghost : Actor
     {
         float initFleeTimer = fleeTimer;
         Animator anim = GetComponent<Animator>();
+        float interval = 0.1667f;
         bool levelRunning = true;
         while (levelRunning)
         {
             if (state != GhostState.FLEEING && state != GhostState.EATEN)
             {
-                yield return new WaitForSeconds(0.1667f);
-                timer += 0.1667f;
+                yield return new WaitForSeconds(interval);
+                timer += interval;
             }
             else if (state == GhostState.FLEEING)
             {
-                yield return new WaitForSeconds(0.1667f);
+                yield return new WaitForSeconds(interval);
                 fleeTimer -= 0.1667f;
                 anim.SetFloat("FleeTimer", fleeTimer);
 
@@ -66,14 +68,46 @@ public abstract class Ghost : Actor
                     state = GhostState.SCATTER;
                 }
             }
+            else if (state == GhostState.EATEN)
+            {
+                yield return new WaitForSeconds(interval);
+                if (fleeTimer != initFleeTimer)
+                {
+                    fleeTimer = initFleeTimer;
+                }
+            }
             // Check game state to check if the level has ended.
         }
         //  yield return null;
     }
     public virtual IEnumerator GhostActions()
     {
-          yield return null;
+        GhostState lastState = state;
+        while (true)
+        {
+
+            if ((this.state != GhostState.FLEEING) && (this.state != GhostState.EATEN))
+            {
+                if (timer < 20)
+                    this.state = GhostState.CHASING;
+                else if (timer > 20 && timer < 28) this.state = GhostState.SCATTER;
+                else if (timer > 28 && timer < 48) this.state = GhostState.CHASING;
+                else if (timer < 48 && timer < 55) this.state = GhostState.SCATTER;
+                else if (timer > 55 && timer < 75) this.state = GhostState.CHASING;
+                else if (timer > 75 && timer < 80) this.state = GhostState.SCATTER;
+                else if (timer > 80 && timer < 100) this.state = GhostState.CHASING;
+                else if (timer > 100 && timer < 105) this.state = GhostState.SCATTER;
+                else if (timer > 105) this.state = GhostState.CHASING;
+            }
+            // Check game state to check if the level has ended.
+            yield return new WaitForSeconds(0.1667f);
+            if (lastState != state)
+            {
+                lastState = state;
+            }
+        }
     }
+
     public virtual void GetRouteToTarget(Vector2 pos, List<Directions> dirs = null)
     {
         if (state == GhostState.SCATTER )
@@ -226,7 +260,26 @@ public abstract class Ghost : Actor
                     break;
             }
         }
-        else if (state == GhostState.FLEEING )
+    }
+    public virtual void Update()
+    {
+
+    }
+
+    public virtual void OnApplicationQuit()
+    {
+        unityEvent.RemoveListener(OnStateChange);
+    }
+    public virtual void Start()
+    {
+        unityEvent.AddListener(OnStateChange);
+    }
+    // Event system to check if the state has changed
+    public virtual void OnStateChange()
+    {
+        Animator anim = this.GetComponent<Animator>();
+
+        if (state == GhostState.FLEEING)
         {
             switch (direction)
             {
@@ -275,9 +328,6 @@ public abstract class Ghost : Actor
             }
 
         }
-    }
-    public virtual void Update()
-    {
 
     }
 
