@@ -11,7 +11,7 @@ public abstract class Ghost : Actor
     public Vector2 ghostHouse = Vector2.zero;
 
     public GameObject player;
-    [Header("The coorinates of the target based on the players Position")]
+    [Header("The coordinates of the target based on the players Position")]
     public Vector2 targetCoords;
     [HideInInspector]
     public List<Directions> routesToTarget;
@@ -104,6 +104,7 @@ public abstract class Ghost : Actor
             if (lastState != state)
             {
                 lastState = state;
+                unityEvent.Invoke();
             }
         }
     }
@@ -281,6 +282,7 @@ public abstract class Ghost : Actor
 
         if (state == GhostState.FLEEING)
         {
+            anim.SetBool("IsFleeing", true);
             switch (direction)
             {
                 case (Directions.LEFT):
@@ -303,12 +305,12 @@ public abstract class Ghost : Actor
                     break;
             }
 
-            anim.SetBool("IsFleeing", true);
         }
-        else if (state == GhostState.EATEN)
+        if (state == GhostState.EATEN)
         {
             anim.SetBool("IsEaten", true);
             anim.SetBool("IsFleeing", false);
+
             switch (direction)
             {
                 case (Directions.LEFT):

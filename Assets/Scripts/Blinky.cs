@@ -5,8 +5,9 @@ using UnityEngine;
 public class Blinky : Ghost
 {
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
+        base.Start();
         StartCoroutine(LevelTimer());
         castRays();
         StartCoroutine(GhostActions());
