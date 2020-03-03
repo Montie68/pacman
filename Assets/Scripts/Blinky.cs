@@ -30,13 +30,5 @@ public class Blinky : Ghost
 
     }
 
-    public override IEnumerator GhostActions()
-    {
-      
-        base.GhostActions();
-
-        yield return null;
-    }
-
 
 }

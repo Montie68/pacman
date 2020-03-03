@@ -100,12 +100,13 @@ public abstract class Ghost : Actor
                 else if (timer > 105) this.state = GhostState.CHASING;
             }
             // Check game state to check if the level has ended.
-            yield return new WaitForSeconds(0.1667f);
+
             if (lastState != state)
             {
                 lastState = state;
                 unityEvent.Invoke();
             }
+            yield return new WaitForSeconds(0.1667f);
         }
     }
 
