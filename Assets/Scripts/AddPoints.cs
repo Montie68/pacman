@@ -21,6 +21,7 @@ public class AddPoints : Pickup
         // Strech goal add test if player 1 or 2 and add score to the correct player\
 
         // ------------- remove after implemnetation --------------------- //
+        palletCounter.instance.palletEaten.Invoke(this);
         Debug.Log("Yummy! Points Added:" + points);
         Destroy(this.gameObject);
     }

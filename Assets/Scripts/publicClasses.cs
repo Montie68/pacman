@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 public enum Directions
 {
@@ -16,3 +17,8 @@ public enum GhostState
        EATEN,
 };
 
+[System.Serializable]
+public class PalletEatenEvent : UnityEvent<AddPoints>
+{
+
+}

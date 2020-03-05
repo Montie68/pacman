@@ -22,6 +22,8 @@ public abstract class Ghost : Actor
     public float timer = 0f;
     [HideInInspector]
     public float fleeTimer = 7f;
+    [HideInInspector]
+    public GhostState lastState;
 
     public virtual IEnumerator FleeTarget()
     {
@@ -82,7 +84,7 @@ public abstract class Ghost : Actor
     }
     public virtual IEnumerator GhostActions()
     {
-        GhostState lastState = state;
+        lastState = state;
         while (true)
         {
 
@@ -103,8 +105,7 @@ public abstract class Ghost : Actor
 
             if (lastState != state)
             {
-                lastState = state;
-                unityEvent.Invoke();
+               unityEvent.Invoke();
             }
             yield return new WaitForSeconds(0.1667f);
         }
@@ -217,6 +218,10 @@ public abstract class Ghost : Actor
             {
                 state = GhostState.EATEN;
             }
+            else if(state == GhostState.EATEN)
+            {
+                Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision.gameObject.GetComponent<Collider2D>());
+            }
         }
     }
     public override void ActorMovement()
@@ -307,7 +312,7 @@ public abstract class Ghost : Actor
             }
 
         }
-        if (state == GhostState.EATEN)
+        else if (state == GhostState.EATEN)
         {
             anim.SetBool("IsEaten", true);
             anim.SetBool("IsFleeing", false);
@@ -331,6 +336,13 @@ public abstract class Ghost : Actor
             }
 
         }
+        else if (state == GhostState.SCATTER && lastState == GhostState.EATEN)
+        {
+            Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), 
+                FindObjectOfType<PlayerController>().GetComponent<Collider2D>(), false);
+        }
+
+        lastState = state;
 
     }
 
