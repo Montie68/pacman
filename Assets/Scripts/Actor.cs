@@ -18,9 +18,9 @@ public abstract class Actor : MonoBehaviour
     public List<Directions> hits;
     public GameObject playerModel;
 
-    [HideInInspector]
+  //  [HideInInspector]
     public Directions direction;
-    [HideInInspector]
+   // [HideInInspector]
     public Directions nextDirection;
     [HideInInspector]
     public Directions lastDirection;

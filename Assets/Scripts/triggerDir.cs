@@ -31,7 +31,7 @@ public class triggerDir : MonoBehaviour
 
     IEnumerator Deley(GameObject col, Ghost ghost)
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.25f);
         col.GetComponent<Animator>().SetBool("IsEaten", false);
         col.GetComponent<Animator>().SetBool("IsFleeing", false);
         col.GetComponent<Actor>().nextDirection = Directions.UP;

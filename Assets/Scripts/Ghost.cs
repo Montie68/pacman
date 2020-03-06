@@ -218,7 +218,7 @@ public abstract class Ghost : Actor
             {
                 state = GhostState.EATEN;
             }
-            else if(state == GhostState.EATEN)
+            if(state == GhostState.EATEN)
             {
                 Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision.gameObject.GetComponent<Collider2D>());
             }
@@ -336,10 +336,11 @@ public abstract class Ghost : Actor
             }
 
         }
-        else if (state == GhostState.SCATTER && lastState == GhostState.EATEN)
+       else if (state == GhostState.CHASING && lastState == GhostState.EATEN)
         {
             Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), 
                 FindObjectOfType<PlayerController>().GetComponent<Collider2D>(), false);
+            direction = Directions.UP;
         }
 
         lastState = state;
