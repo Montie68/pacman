@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Blinky : Ghost
+public class Inky : Ghost
 {
+    
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
         StartCoroutine(LevelTimer());
-        castRays();
-        StartCoroutine(GhostActions());
-
+        StartCoroutine(WaitForStart());
     }
 
     // Update is called once per frame
     public override void  Update()
     {
+        if (!hasStarted) return;
         castRays();
         ActorMovement();
     }
@@ -29,6 +29,13 @@ public class Blinky : Ghost
         base.GetRouteToTarget(pos, dirs);
 
     }
+    public override IEnumerator WaitForStart()
+    {
+        yield return new WaitForSeconds(startTimer);
+        
+        StartCoroutine(GhostActions());
+        hasStarted = true;
+    }
 
-    
+
 }

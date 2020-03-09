@@ -14,7 +14,7 @@ public abstract class Actor : MonoBehaviour
     public bool isTeleporting = false;
 
     // List of Raycats Hits
-    [HideInInspector]
+   // [HideInInspector]
     public List<Directions> hits;
     public GameObject playerModel;
 
@@ -35,11 +35,18 @@ public abstract class Actor : MonoBehaviour
     }
 
 
-    public virtual void castRays()
+    public virtual void castRays(int _layerMask = -1)
     {
+
         // Bit shift the index of the layer (8) to get a bit mask
         int layerMask = 1 << 8;
-        hits = new List<Directions>();
+
+        if (_layerMask == -1)
+            layerMask = 1 << 8;
+        else
+            layerMask = 1 << _layerMask;
+
+            hits = new List<Directions>();
 
         Vector3 pos = transform.position;
 

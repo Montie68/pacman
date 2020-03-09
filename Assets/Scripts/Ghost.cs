@@ -24,7 +24,9 @@ public abstract class Ghost : Actor
     public float fleeTimer = 7f;
     [HideInInspector]
     public GhostState lastState;
-
+    public float startTimer = 0f;
+    [HideInInspector]
+    public bool hasStarted = false;
     public virtual IEnumerator FleeTarget()
     {
         if (state == GhostState.FLEEING)
@@ -346,5 +348,8 @@ public abstract class Ghost : Actor
         lastState = state;
 
     }
-
+    public virtual IEnumerator WaitForStart()
+    {
+        yield return null;
+    }
 }
