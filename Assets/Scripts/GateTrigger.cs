@@ -21,6 +21,10 @@ public class GateTrigger : MonoBehaviour
         {
             if (col.GetComponent<Ghost>().state == GhostState.EATEN)
             {
+                collision.GetComponent<Ghost>().isBoosted = false;
+                //collision.GetComponent<Ghost>().direction = Directions.DOWN;
+                collision.GetComponent<Ghost>().nextDirection = Directions.DOWN;
+
                 dir.directions.Remove(Directions.RIGHT);
                 dir.directions.Remove(Directions.LEFT);
                 dir.directions.Add(Directions.DOWN);
