@@ -21,6 +21,8 @@ public class GateTrigger : MonoBehaviour
         {
             if (col.GetComponent<Ghost>().state == GhostState.EATEN)
             {
+                dir.directions.Remove(Directions.RIGHT);
+                dir.directions.Remove(Directions.LEFT);
                 dir.directions.Add(Directions.DOWN);
                 Gate.GetComponent<Collider2D>().enabled = false;
             }
@@ -40,7 +42,7 @@ public class GateTrigger : MonoBehaviour
 
     IEnumerator Delay()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
           Gate.GetComponent<Collider2D>().enabled = true;
     }
 }

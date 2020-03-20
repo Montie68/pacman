@@ -9,14 +9,17 @@ public class palletCounter : MonoBehaviour
     public int palletCount;
     List<AddPoints> pallets = new List<AddPoints>();
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (instance != null)
         {
             Destroy(this);
         }
         else instance = this;
-
+    }
+    void Start()
+    {
+        
         foreach(AddPoints ap in GetComponentsInChildren<AddPoints>())
         {
             pallets.Add(ap);

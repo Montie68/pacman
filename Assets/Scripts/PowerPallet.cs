@@ -13,7 +13,7 @@ public class PowerPallet : Pickup
             if (g.state != GhostState.EATEN) {
                 g.state = GhostState.FLEEING;
                 g.fleeTimer = 7;
-                    }
+            }
         }
         PlayerController player = FindObjectOfType<PlayerController>();
         StartCoroutine(player.Boosted());

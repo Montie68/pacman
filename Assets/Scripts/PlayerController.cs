@@ -84,10 +84,9 @@ public class PlayerController : Actor
         }
     }
 
-    public override void ActorMovement()
+    public override void ActorMovement(float _speed = 0)
     {
-        float _speed;
-
+        
         if (isBoosted)
         { 
             _speed = speed + speedBoost;
@@ -97,83 +96,39 @@ public class PlayerController : Actor
             _speed = speed;
         }
 
-        if (Velocity.magnitude == 0)
-        {
-            direction = Directions.STOP;
-        }
-        bool nextDirClear = true;
-        foreach(Directions pd in hits)
-        {
-            if (pd == nextDirection)
-            { 
-                nextDirClear = false;
-                continue;
-            }
-        }
-
-        if (nextDirClear)
-            direction = nextDirection;
-
-        if (direction == Directions.LEFT)
-        {
-            Velocity = Vector3.left * _speed * Time.deltaTime;
-        }
-        else if (direction == Directions.RIGHT)
-        {
-            Velocity = Vector3.right * _speed * Time.deltaTime;
-        }
-        else if (direction == Directions.UP)
-        {
-            Velocity = Vector3.up * _speed * Time.deltaTime;
-        }
-        else if (direction == Directions.DOWN)
-        {
-            Velocity = Vector3.down * _speed * Time.deltaTime;
-        }
-        else if (direction == Directions.STOP)
-        {
-            Velocity = Vector3.zero;
-        }
-        if (Velocity.magnitude > 0)
-            playerModel.GetComponent<Animator>().SetBool("isMoving", true);
-        else
-            playerModel.GetComponent<Animator>().SetBool("isMoving", false);
-
-
-        transform.Translate(Velocity);
-
+        base.ActorMovement(_speed);
     }
 
     void ChangePlayerOrintation()
     {
         if (direction == Directions.RIGHT && modelOrintation != Directions.RIGHT)
         {
-            playerModel.transform.localEulerAngles = new Vector3(0, 0, 0);
+            actorModel.transform.localEulerAngles = new Vector3(0, 0, 0);
             modelOrintation = Directions.RIGHT;
         }
         else if (direction == Directions.LEFT && modelOrintation != Directions.LEFT)
         {
-            playerModel.transform.localEulerAngles = new Vector3(0, 0, 0);
-            playerModel.transform.Rotate(0, 0, -180);
+            actorModel.transform.localEulerAngles = new Vector3(0, 0, 0);
+            actorModel.transform.Rotate(0, 0, -180);
             modelOrintation = Directions.LEFT;
         }
         else if (direction == Directions.UP && modelOrintation != Directions.UP)
         {
-            playerModel.transform.localEulerAngles = new Vector3(0, 0, 0);
-            playerModel.transform.Rotate(0, 0, 90);
+            actorModel.transform.localEulerAngles = new Vector3(0, 0, 0);
+            actorModel.transform.Rotate(0, 0, 90);
             modelOrintation = Directions.UP;
         }
         else if (direction == Directions.DOWN && modelOrintation != Directions.DOWN)
         {
-            playerModel.transform.localEulerAngles = new Vector3(0, 0, 0);
-            playerModel.transform.Rotate(0, 0, -90);
+            actorModel.transform.localEulerAngles = new Vector3(0, 0, 0);
+            actorModel.transform.Rotate(0, 0, -90);
             modelOrintation = Directions.DOWN;
         }
         else if (direction == Directions.STOP && modelOrintation != Directions.STOP)
         {
-            playerModel.GetComponent<Animator>().SetBool("isMoving", false);
+            actorModel.GetComponent<Animator>().SetBool("isMoving", false);
             modelOrintation = Directions.STOP;
-            playerModel.GetComponent<Animator>().SetBool("isMoving", false);
+            actorModel.GetComponent<Animator>().SetBool("isMoving", false);
 
         }
 

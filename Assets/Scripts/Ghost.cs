@@ -27,20 +27,27 @@ public abstract class Ghost : Actor
     public float startTimer = 0f;
     [HideInInspector]
     public bool hasStarted = false;
+    public float eatenBoost = 2.0f;
+    [HideInInspector]
+    public bool isBoosted = false;
+    [HideInInspector]
+    public bool isStuck = false;
+    public Vector3 lastPos { get; set; }
+
     public virtual IEnumerator FleeTarget()
     {
+        bool isFleeing = true;
         if (state == GhostState.FLEEING)
         {
-            while (true)
+            while (isFleeing)
             {
                 target = new Vector2(Random.Range(-10, 10), Random.Range(-10, 10));
-                yield return new WaitForSeconds(Random.Range(0, 8));
+                yield return new WaitForSeconds(Random.Range(0, 2));
                 FleeTarget();
                 if (state != GhostState.FLEEING)
                 {
-                    StopCoroutine(FleeTarget());
-                    continue;
-                };
+                    isFleeing = false;
+                }
             }
         }
         yield return null;
@@ -212,6 +219,14 @@ public abstract class Ghost : Actor
             GetRouteToTarget((Vector2)transform.position, other.gameObject.GetComponent<triggerDir>().directions);
         }
     }
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.gameObject.layer == 12 && isStuck )
+        {
+            GetRouteToTarget((Vector2)transform.position, other.gameObject.GetComponent<triggerDir>().directions);
+            isStuck = false;
+        }
+    }
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == 10 )
@@ -226,9 +241,22 @@ public abstract class Ghost : Actor
             }
         }
     }
-    public override void ActorMovement()
+    public override void ActorMovement(float _speed = 0)
     {
-        base.ActorMovement();
+        if (isBoosted)
+        {
+            _speed = speed + eatenBoost;
+        }
+        else
+        {
+            _speed = speed;
+        }
+        if (transform.position == lastPos)
+        {
+            isStuck = true;
+        }
+        else lastPos = transform.position;
+        base.ActorMovement(_speed);
 
         Animator anim = this.GetComponent<Animator>();
         if (direction != lastDirection && state != GhostState.FLEEING)
@@ -314,10 +342,15 @@ public abstract class Ghost : Actor
             }
 
         }
-        else if (state == GhostState.EATEN)
+        if (state == GhostState.EATEN)
         {
             anim.SetBool("IsEaten", true);
             anim.SetBool("IsFleeing", false);
+            anim.SetBool("moveL", false);
+            anim.SetBool("moveR", false);
+            anim.SetBool("moveU", false);
+            anim.SetBool("moveD", false);
+            isBoosted = true;
 
             switch (direction)
             {
@@ -338,11 +371,13 @@ public abstract class Ghost : Actor
             }
 
         }
-       else if (state == GhostState.CHASING && lastState == GhostState.EATEN)
+       if ((state == GhostState.CHASING || state == GhostState.SCATTER) && lastState == GhostState.EATEN)
         {
             Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), 
                 FindObjectOfType<PlayerController>().GetComponent<Collider2D>(), false);
             direction = Directions.UP;
+            isBoosted = false;
+
         }
 
         lastState = state;

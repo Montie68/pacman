@@ -24,6 +24,7 @@ public class Blinky : Ghost
     
     public override void GetRouteToTarget(Vector2 pos, List<Directions> dirs = null)
     {
+        if (state == GhostState.CHASING) 
         target = (Vector2)player.transform.position + targetCoords;
 
         base.GetRouteToTarget(pos, dirs);

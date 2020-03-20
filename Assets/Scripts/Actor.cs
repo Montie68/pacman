@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public abstract class Actor : MonoBehaviour
 {
-    public float raylength = 0.5f;
+    public float raylength = 0.8f;
     public float FrontRaylength = 0.5f;
     public float speed = 2f;
     [HideInInspector]
@@ -16,11 +16,11 @@ public abstract class Actor : MonoBehaviour
     // List of Raycats Hits
    // [HideInInspector]
     public List<Directions> hits;
-    public GameObject playerModel;
+    public GameObject actorModel;
 
-  //  [HideInInspector]
-    public Directions direction;
    // [HideInInspector]
+    public Directions direction;
+    [HideInInspector]
     public Directions nextDirection;
     [HideInInspector]
     public Directions lastDirection;
@@ -96,7 +96,7 @@ public abstract class Actor : MonoBehaviour
         }
 
     }
-    public virtual void ActorMovement()
+    public virtual void ActorMovement(float _speed = 0)
     {
         if (Velocity.magnitude == 0)
         {
@@ -120,28 +120,28 @@ public abstract class Actor : MonoBehaviour
 
         if (direction == Directions.LEFT)
         {
-            Velocity = Vector3.left * speed * Time.deltaTime;
+            Velocity = Vector3.left * _speed * Time.deltaTime;
         }
         else if (direction == Directions.RIGHT)
         {
-            Velocity = Vector3.right * speed * Time.deltaTime;
+            Velocity = Vector3.right * _speed * Time.deltaTime;
         }
         else if (direction == Directions.UP)
         {
-            Velocity = Vector3.up * speed * Time.deltaTime;
+            Velocity = Vector3.up * _speed * Time.deltaTime;
         }
         else if (direction == Directions.DOWN)
         {
-            Velocity = Vector3.down * speed * Time.deltaTime;
+            Velocity = Vector3.down * _speed * Time.deltaTime;
         }
         else if (direction == Directions.STOP)
         {
             Velocity = Vector3.zero;
         }
         if (Velocity.magnitude > 0)
-            playerModel.GetComponent<Animator>().SetBool("isMoving", true);
+            actorModel.GetComponent<Animator>().SetBool("isMoving", true);
         else
-            playerModel.GetComponent<Animator>().SetBool("isMoving", false);
+            actorModel.GetComponent<Animator>().SetBool("isMoving", false);
 
 
         transform.Translate(Velocity);
