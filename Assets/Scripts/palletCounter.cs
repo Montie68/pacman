@@ -19,13 +19,17 @@ public class palletCounter : MonoBehaviour
     }
     void Start()
     {
-        
-        foreach(AddPoints ap in GetComponentsInChildren<AddPoints>())
+        SetList ();
+        palletEaten.AddListener(OnPalletEaten);
+    }
+
+    public void SetList()
+    {
+        foreach (AddPoints ap in GetComponentsInChildren<AddPoints>())
         {
             pallets.Add(ap);
         }
         palletCount = pallets.Count;
-        palletEaten.AddListener(OnPalletEaten);
     }
 
     // Update is called once per frame

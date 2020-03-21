@@ -14,7 +14,7 @@ public class Telepotrer : MonoBehaviour
     {
         destinationPos = destination.transform.position;
         int offset = 1;
-        if (exitDirection == Directions.RIGHT) offset = -1;
+        if (exitDirection == Directions.RIGHT) offset *= -1;
 
         destinationPos.x += offset;
         destinationPos.z = 0;
@@ -24,9 +24,7 @@ public class Telepotrer : MonoBehaviour
         Actor actor = collision.gameObject.GetComponent<Actor>();
         if (!actor.isTeleporting)
         {
-            actor.isTeleporting = true;
-            actor.ChangeDirection(exitDirection);
-            actor.transform.position = destinationPos;
+            StartCoroutine(Teleport(actor));
         }
     }
 
@@ -37,5 +35,18 @@ public class Telepotrer : MonoBehaviour
         {
             actor.isTeleporting = false;
         }
+    }
+    public IEnumerator Teleport(Actor actor)
+    {
+        actor.isTeleporting = true;
+        if (actor.tag == "Enemies")
+        {
+            actor.transform.position = new Vector2(100,100);
+            yield return new WaitForSeconds(1);
+        }
+        actor.ChangeDirection(exitDirection);
+        actor.transform.position = destinationPos;
+
+        yield return null;
     }
 }

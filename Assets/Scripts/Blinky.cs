@@ -8,17 +8,22 @@ public class Blinky : Ghost
     public override void Start()
     {
         base.Start();
+    }
+
+    public override void StartGame() {
         StartCoroutine(LevelTimer());
         castRays();
         StartCoroutine(GhostActions());
-
     }
-
     // Update is called once per frame
     public override void  Update()
     {
-        castRays();
-        ActorMovement();
+        if (GameManager.main.isStarted)
+        {
+            if (!hasStarted) return;
+            castRays();
+            ActorMovement();
+        }
     }
 
     
@@ -31,5 +36,10 @@ public class Blinky : Ghost
 
     }
 
-    
+    public override IEnumerator WaitForStart()
+    {
+        yield return new WaitForSeconds(startTimer);
+
+        hasStarted = true;
+    }
 }

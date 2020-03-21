@@ -29,11 +29,16 @@ public abstract class Actor : MonoBehaviour
     [HideInInspector]
     public Vector3 Velocity = Vector3.zero;
     public float[] rayPoints = new float[2] {0.2f, 0.4f };
+    [HideInInspector]
+    public Vector3 startPos;
+
+    [HideInInspector]
+    public bool hasStarted = false;
 
     public virtual void ChangeDirection(Directions _direction)
     {
     }
-
+    public virtual void StartGame() { }
 
     public virtual void castRays(int _layerMask = -1)
     {
@@ -146,6 +151,10 @@ public abstract class Actor : MonoBehaviour
 
         transform.Translate(Velocity);
 
+    }
+    public virtual IEnumerator WaitForStart()
+    {
+        yield return null;
     }
 
 }

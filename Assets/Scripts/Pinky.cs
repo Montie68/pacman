@@ -4,24 +4,30 @@ using UnityEngine;
 
 public class Pinky : Ghost
 {
-    
+
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
-        StartCoroutine(LevelTimer());
-        StartCoroutine(WaitForStart());
     }
-
-    // Update is called once per frame
-    public override void  Update()
+    public override void StartGame()
     {
-        if (!hasStarted) return;
+        StartCoroutine(LevelTimer());
         castRays();
-        ActorMovement();
+        StartCoroutine(GhostActions());
+    }
+    // Update is called once per frame
+    public override void Update()
+    {
+        if (GameManager.main.isStarted)
+        {
+            if (!hasStarted) return;
+            castRays();
+            ActorMovement();
+        }
     }
 
-    
+
     public override void GetRouteToTarget(Vector2 pos, List<Directions> dirs = null)
     {
         if (state == GhostState.CHASING)

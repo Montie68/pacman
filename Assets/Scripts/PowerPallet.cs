@@ -6,7 +6,6 @@ public class PowerPallet : Pickup
 {
     public override void OnPickUp()
     {
-        base.OnPickUp();
         Ghost[] ghosts = FindObjectsOfType<Ghost>();
         foreach(Ghost g in ghosts)
         {
@@ -17,6 +16,7 @@ public class PowerPallet : Pickup
         }
         PlayerController player = FindObjectOfType<PlayerController>();
         StartCoroutine(player.Boosted());
-        Destroy(this.gameObject);
+               base.OnPickUp();
+
     }
 }

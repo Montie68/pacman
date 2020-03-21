@@ -14,15 +14,12 @@ public class AddPoints : Pickup
 
     public override void OnPickUp()
     {
-        base.OnPickUp();
-        // Test if the collider is the player
         // if player add points to the Game manger.
-
-        // Strech goal add test if player 1 or 2 and add score to the correct player\
+        base.OnPickUp();
+        palletCounter.instance.palletEaten.Invoke(this);
+        // Strech goal add test if player 1 or 2 and add score to the correct player
 
         // ------------- remove after implemnetation --------------------- //
-        palletCounter.instance.palletEaten.Invoke(this);
         Debug.Log("Yummy! Points Added:" + points);
-        Destroy(this.gameObject);
     }
 }

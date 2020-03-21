@@ -17,7 +17,7 @@ public class PlayerController : Actor
 
     Vector3 playerStartPos;
 
-
+    Animator anim;
 
 
     // Start is called before the first frame update
@@ -26,6 +26,8 @@ public class PlayerController : Actor
         playerStartPos = transform.position;
         direction = Directions.STOP;
         hits = new List<Directions>();
+        startPos = transform.position;
+        anim = actorModel.GetComponent<Animator>();
     }
 
     public IEnumerator Boosted()
@@ -44,6 +46,7 @@ public class PlayerController : Actor
     // Update is called once per frame
     void Update()
     {
+        if (!hasStarted) return;
         castRays();
         getInput();
         ActorMovement();
@@ -60,8 +63,14 @@ public class PlayerController : Actor
 
     public void PlayerDeath()
     {
-        transform.position = playerStartPos;
+        ModLives();
+        //transform.position = playerStartPos;
         direction = Directions.STOP;
+        if (!isAlive)
+        {
+            anim.SetBool("isDead", true);
+            anim.SetBool("isMoving", false);
+        }
     }
 
     void getInput()
@@ -126,9 +135,9 @@ public class PlayerController : Actor
         }
         else if (direction == Directions.STOP && modelOrintation != Directions.STOP)
         {
-            actorModel.GetComponent<Animator>().SetBool("isMoving", false);
+            anim.SetBool("isMoving", false);
             modelOrintation = Directions.STOP;
-            actorModel.GetComponent<Animator>().SetBool("isMoving", false);
+            anim.SetBool("isMoving", false);
 
         }
 
@@ -146,7 +155,14 @@ public class PlayerController : Actor
         {
             Velocity = Vector3.zero;
         }
-
+        if (collision.gameObject.layer == 9)
+        {
+            Ghost ghost = collision.gameObject.GetComponent<Ghost>();
+            if (ghost.state == GhostState.CHASING || ghost.state == GhostState.SCATTER)
+            {
+                PlayerDeath();
+            }
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -155,6 +171,12 @@ public class PlayerController : Actor
         {
             collision.GetComponent<Pickup>().OnPickUp();
         }
+
     }
 
+    public override IEnumerator WaitForStart()
+    {
+        yield return new WaitForSeconds(0.1f);
+        hasStarted = true;
+    }
 }

@@ -25,8 +25,6 @@ public abstract class Ghost : Actor
     [HideInInspector]
     public GhostState lastState;
     public float startTimer = 0f;
-    [HideInInspector]
-    public bool hasStarted = false;
     public float eatenBoost = 2.0f;
     [HideInInspector]
     public bool isBoosted = false;
@@ -175,25 +173,25 @@ public abstract class Ghost : Actor
                 case (Directions.LEFT):
                     {
                         Vector2 testPos = pos + Vector2.left;
-                        dirTest.Add(dir, Vector2.Distance(testPos, target));
+                        if (!dirTest.ContainsKey(Directions.LEFT)) dirTest.Add(dir, Vector2.Distance(testPos, target));
                         break;
                     }
                 case (Directions.RIGHT):
                     {
                         Vector2 testPos = pos + Vector2.right;
-                        dirTest.Add(dir, Vector2.Distance(testPos, target));
+                        if (!dirTest.ContainsKey(Directions.RIGHT)) dirTest.Add(dir, Vector2.Distance(testPos, target));
                         break;
                     }
                 case (Directions.UP):
                     {
                         Vector2 testPos = pos + Vector2.up;
-                        dirTest.Add(dir, Vector2.Distance(testPos, target));
+                        if (!dirTest.ContainsKey(Directions.UP)) dirTest.Add(dir, Vector2.Distance(testPos, target));
                         break;
                     }
                 case (Directions.DOWN):
                     {
                         Vector2 testPos = pos + Vector2.down;
-                        dirTest.Add(dir, Vector2.Distance(testPos, target));
+                        if (!dirTest.ContainsKey(Directions.DOWN)) dirTest.Add(dir, Vector2.Distance(testPos, target));
                         break;
                     }
                 default:
@@ -310,6 +308,7 @@ public abstract class Ghost : Actor
     public virtual void Start()
     {
         unityEvent.AddListener(OnStateChange);
+        startPos = transform.position;
     }
     // Event system to check if the state has changed
     public virtual void OnStateChange()
@@ -382,9 +381,5 @@ public abstract class Ghost : Actor
 
         lastState = state;
 
-    }
-    public virtual IEnumerator WaitForStart()
-    {
-        yield return null;
     }
 }

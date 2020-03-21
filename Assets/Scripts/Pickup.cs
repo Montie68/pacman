@@ -8,6 +8,8 @@ public class Pickup : MonoBehaviour
     
     public int points = 1;
     public virtual void OnPickUp()
-    {}
+    {
+        gameObject.SetActive(false);
+    }
 
 }
