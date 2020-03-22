@@ -249,7 +249,9 @@ public abstract class Ghost : Actor
         {
             _speed = speed;
         }
-        if (transform.position == lastPos)
+        Vector3 offset = new Vector3(0.05f, 0.05f, 0);
+        if (transform.position.x < (lastPos.x + offset.x) || transform.position.x > (lastPos.x - offset.x) ||
+            transform.position.y < (lastPos.y + offset.y) || transform.position.y > (lastPos.y - offset.y))
         {
             isStuck = true;
         }

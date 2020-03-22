@@ -53,6 +53,8 @@ public class GameManager : MonoBehaviour
     internal void addPoints(int points)
     {
         Points += points;
+        string pts = string.Format("{0,22:D6}", Points);
+        scoreText.text = pts;
     }
     // method to start level
     public IEnumerator StartLevel()
