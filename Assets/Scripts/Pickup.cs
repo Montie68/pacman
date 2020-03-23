@@ -9,6 +9,7 @@ public class Pickup : MonoBehaviour
     public int points = 1;
     public virtual void OnPickUp()
     {
+        GameManager.main.addPoints(points);
         gameObject.SetActive(false);
     }
 

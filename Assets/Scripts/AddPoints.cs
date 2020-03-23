@@ -15,7 +15,6 @@ public class AddPoints : Pickup
     public override void OnPickUp()
     {
         // if player add points to the Game manger.
-        GameManager.main.addPoints(points);
         base.OnPickUp();
         palletCounter.instance.palletEaten.Invoke(this);
         // Strech goal add test if player 1 or 2 and add score to the correct player

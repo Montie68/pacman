@@ -16,7 +16,8 @@ public class PowerPallet : Pickup
         }
         PlayerController player = FindObjectOfType<PlayerController>();
         StartCoroutine(player.Boosted());
-               base.OnPickUp();
+
+        base.OnPickUp();
 
     }
 }
