@@ -28,9 +28,11 @@ public abstract class Ghost : Actor
     public float eatenBoost = 2.0f;
     [HideInInspector]
     public bool isBoosted = false;
-    [HideInInspector]
+    //[HideInInspector]
     public bool isStuck = false;
     public Vector3 lastPos { get; set; }
+
+    Collider2D lastTrigger;
 
     public virtual IEnumerator FleeTarget()
     {
@@ -215,16 +217,24 @@ public abstract class Ghost : Actor
         if (other.gameObject.layer == 12)
         {
             GetRouteToTarget((Vector2)transform.position, other.gameObject.GetComponent<triggerDir>().directions);
+            lastTrigger = other;
         }
     }
-    private void OnTriggerStay2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.layer == 12 && isStuck )
         {
-            GetRouteToTarget((Vector2)transform.position, other.gameObject.GetComponent<triggerDir>().directions);
-            isStuck = false;
+            Unstuck(other);
         }
     }
+
+    private void Unstuck(Collider2D other)
+    {
+        if (!hasStarted) return;
+        GetRouteToTarget((Vector2)transform.position, other.gameObject.GetComponent<triggerDir>().directions);
+        isStuck = false;
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.layer == 10 )
@@ -233,10 +243,11 @@ public abstract class Ghost : Actor
             {
                 state = GhostState.EATEN;
             }
-            if(state == GhostState.EATEN)
+            if (state == GhostState.EATEN)
             {
                 Physics2D.IgnoreCollision(this.GetComponent<Collider2D>(), collision.gameObject.GetComponent<Collider2D>());
             }
+            else Stop();
         }
     }
     public override void ActorMovement(float _speed = 0)
@@ -250,13 +261,15 @@ public abstract class Ghost : Actor
             _speed = speed;
         }
         Vector3 offset = new Vector3(0.05f, 0.05f, 0);
-        if (transform.position.x < (lastPos.x + offset.x) || transform.position.x > (lastPos.x - offset.x) ||
-            transform.position.y < (lastPos.y + offset.y) || transform.position.y > (lastPos.y - offset.y))
+        if ((transform.position.x < (lastPos.x + offset.x) || transform.position.x > (lastPos.x - offset.x) ||
+            transform.position.y < (lastPos.y + offset.y) || transform.position.y > (lastPos.y - offset.y)) && hasStarted)
         {
             isStuck = true;
         }
         else lastPos = transform.position;
         base.ActorMovement(_speed);
+
+        if (isStuck) Unstuck(lastTrigger);
 
         Animator anim = this.GetComponent<Animator>();
         if (direction != lastDirection && state != GhostState.FLEEING)

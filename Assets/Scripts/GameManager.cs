@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using TMPro;
 using System;
 
@@ -21,10 +22,13 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public bool isStarted = false;
 
+    public UnityEvent playerDead = new UnityEvent();
+
     int Points = 0;
     // Start is called before the first frame update
     void Start()
     {
+        playerDead.AddListener(PlayerDeath);
         // make sure that this is to only copy of the gameManger
         if (main == null)
         {
@@ -42,6 +46,14 @@ public class GameManager : MonoBehaviour
         StartCoroutine(StartLevel());
     }
 
+    private void PlayerDeath()
+    {
+        foreach(Actor actor in actors)
+        {
+            actor.Stop();
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -53,7 +65,7 @@ public class GameManager : MonoBehaviour
     internal void addPoints(int points)
     {
         Points += points;
-        string pts = string.Format("{0,22:D6}", Points);
+        string pts =  Points.ToString();
         scoreText.text = pts;
     }
     // method to start level

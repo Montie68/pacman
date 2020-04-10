@@ -157,4 +157,11 @@ public abstract class Actor : MonoBehaviour
         yield return null;
     }
 
+    public virtual void Stop()
+    {
+        this.nextDirection = Directions.STOP;
+        this.direction = Directions.STOP;
+        ActorMovement(0);
+    }
+
 }

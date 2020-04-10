@@ -57,6 +57,7 @@ public class PlayerController : Actor
     public void ModLives(int life = -1)
     {
         lives += life;
+        GameManager.main.playerDead.Invoke();
         if (lives >= 0 && isAlive)
             isAlive = false;
     }
