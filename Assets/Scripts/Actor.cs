@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -28,7 +29,7 @@ public abstract class Actor : MonoBehaviour
     public Directions modelOrintation;
     [HideInInspector]
     public Vector3 Velocity = Vector3.zero;
-    public float[] rayPoints = new float[2] {0.2f, 0.4f };
+    public float[] rayPoints = new float[2] {0.15f, 0.35f };
     [HideInInspector]
     public Vector3 startPos;
 
@@ -38,23 +39,37 @@ public abstract class Actor : MonoBehaviour
     public virtual void ChangeDirection(Directions _direction)
     {
     }
-    public virtual void StartGame() { }
+    public virtual void OnApplicationQuit()
+    {
 
+    }
+    public void Awake()
+    {
+        GameManager.playerDead += RestartGame;
+    }
+    public virtual void StartGame() { }
+    public virtual void RestartGame(int lives) {
+        if (lives > 0)
+        {
+            transform.position = startPos;
+            direction = Directions.STOP;
+        }
+    }
     public virtual void castRays(int _layerMask = -1)
     {
 
         // Bit shift the index of the layer (8) to get a bit mask
         int layerMask = 1 << 8;
 
-        if (_layerMask == -1)
+    /*    if (_layerMask == -1)
             layerMask = 1 << 8;
         else
-            layerMask = 1 << _layerMask;
+            layerMask = 1 << _layerMask;*/
 
             hits = new List<Directions>();
 
         Vector3 pos = transform.position;
-
+        DebugRay();
         if (Physics2D.Raycast(pos, transform.TransformDirection(Vector3.left), raylength, layerMask) ||
             Physics2D.Raycast(pos + (Vector3.up * rayPoints[1]), transform.TransformDirection(Vector3.left), raylength, layerMask) ||
             Physics2D.Raycast(pos + (Vector3.down * rayPoints[1]), transform.TransformDirection(Vector3.left), raylength, layerMask) ||
@@ -101,6 +116,22 @@ public abstract class Actor : MonoBehaviour
         }
 
     }
+
+    private void DebugRay()
+    {
+        Vector3 pos = transform.position;
+        Debug.DrawRay(pos, transform.TransformDirection(Vector3.left));
+        Debug.DrawRay(pos, transform.TransformDirection(Vector3.up));
+        Debug.DrawRay(pos, transform.TransformDirection(Vector3.right));
+        Debug.DrawRay(pos + (Vector3.up * rayPoints[1]), transform.TransformDirection(Vector3.right) );
+        Debug.DrawRay(pos + (Vector3.down * rayPoints[1]), transform.TransformDirection(Vector3.right));
+        Debug.DrawRay(pos + (Vector3.up * rayPoints[0]), transform.TransformDirection(Vector3.right));
+        Debug.DrawRay(pos + (Vector3.down * rayPoints[0]), transform.TransformDirection(Vector3.right));
+
+        Debug.DrawRay(pos, transform.TransformDirection(Vector3.down));
+
+    }
+
     public virtual void ActorMovement(float _speed = 0)
     {
         if (Velocity.magnitude == 0)

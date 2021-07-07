@@ -15,11 +15,15 @@ public class triggerDir : MonoBehaviour
             BackUpDirs.Add(d);
     }
 
-
+    private void Update()
+    {
+        if (directions.Count == 0) RestoreDirections();
+    }
     void OnTriggerEnter2D(Collider2D collision)
     {
 
         GameObject col = collision.gameObject;
+        //int layer = 1 << 9;
         if (col.layer == 9 && isGhostHouse)
         {
             if (col.GetComponent<Ghost>().state == GhostState.EATEN)
@@ -31,7 +35,18 @@ public class triggerDir : MonoBehaviour
 
     IEnumerator Deley(GameObject col, Ghost ghost)
     {
-        yield return new WaitForSeconds(1.25f);
+        directions = new List<Directions>();
+        yield return new WaitForSeconds(1);
+        directions.Add(Directions.DOWN);
+        col.GetComponent<Actor>().nextDirection = Directions.DOWN;
+        yield return new WaitForSeconds(1/ 2);
+        directions = new List<Directions>();
+        directions.Add(Directions.STOP);
+        col.GetComponent<Actor>().Velocity = Vector3.zero;
+        col.GetComponent<Actor>().nextDirection = Directions.STOP;
+        yield return new WaitForSeconds(30/60f);
+        directions = new List<Directions>();
+        directions.Add(Directions.UP);
         col.GetComponent<Animator>().SetBool("IsEaten", false);
         col.GetComponent<Animator>().SetBool("IsFleeing", false);
         col.GetComponent<Actor>().nextDirection = Directions.UP;
@@ -42,6 +57,11 @@ public class triggerDir : MonoBehaviour
 
     }
     void OnTriggerExit2D(Collider2D collision)
+    {
+        RestoreDirections();
+    }
+
+    private void RestoreDirections()
     {
         if (directions != BackUpDirs)
         {

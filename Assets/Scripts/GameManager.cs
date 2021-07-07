@@ -22,13 +22,13 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public bool isStarted = false;
 
-    public UnityEvent playerDead = new UnityEvent();
+    public delegate void PlayerDead(int lives);
+    public static PlayerDead playerDead;
 
     int Points = 0;
     // Start is called before the first frame update
     void Start()
     {
-        playerDead.AddListener(PlayerDeath);
         // make sure that this is to only copy of the gameManger
         if (main == null)
         {
@@ -44,14 +44,25 @@ public class GameManager : MonoBehaviour
         actors = FindObjectsOfType<Actor>();
         // start level.
         StartCoroutine(StartLevel());
+        playerDead += RestartGame;
+    }
+    private void OnApplicationQuit()
+    {
+        playerDead -= RestartGame;
+    }
+    private void RestartGame(int lives)
+    {
+        if (lives > 0)
+        {
+            isStarted = false;
+            StartCoroutine(StartLevel());
+
+        }
     }
 
     private void PlayerDeath()
     {
-        foreach(Actor actor in actors)
-        {
-            actor.Stop();
-        }
+
     }
 
     // Update is called once per frame

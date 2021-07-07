@@ -51,13 +51,13 @@ public class PlayerController : Actor
         getInput();
         ActorMovement();
         ChangePlayerOrintation();
+
     }
 
 
     public void ModLives(int life = -1)
     {
         lives += life;
-        GameManager.main.playerDead.Invoke();
         if (lives >= 0 && isAlive)
             isAlive = false;
     }
@@ -67,13 +67,27 @@ public class PlayerController : Actor
         ModLives();
         //transform.position = playerStartPos;
         direction = Directions.STOP;
+        Velocity = Vector3.zero;
+        GetComponent<CircleCollider2D>().enabled = false;
         if (!isAlive)
         {
             anim.SetBool("isDead", true);
             anim.SetBool("isMoving", false);
         }
+
+            GameManager.playerDead?.Invoke(lives);
+
     }
 
+    public override void RestartGame(int lives)
+    {
+        Velocity = Vector3.zero;
+        base.RestartGame(lives);
+        anim.SetBool("isDead", false);
+        isAlive = true;
+        hasStarted = false;
+        GetComponent<CircleCollider2D>().enabled = true;
+    }
     void getInput()
     {
         if (Input.GetAxis("Horizontal") > 0) 
@@ -115,30 +129,38 @@ public class PlayerController : Actor
         {
             actorModel.transform.localEulerAngles = new Vector3(0, 0, 0);
             modelOrintation = Directions.RIGHT;
+            transform.position = new Vector2(transform.position.x, transform.position.y > 0 ? (int)transform.position.y + 0.5f : (int)transform.position.y - 0.5f);
         }
         else if (direction == Directions.LEFT && modelOrintation != Directions.LEFT)
         {
             actorModel.transform.localEulerAngles = new Vector3(0, 0, 0);
             actorModel.transform.Rotate(0, 0, -180);
             modelOrintation = Directions.LEFT;
+            transform.position = new Vector2(transform.position.x, transform.position.y > 0 ? (int)transform.position.y + 0.5f : (int)transform.position.y - 0.5f);
+
         }
         else if (direction == Directions.UP && modelOrintation != Directions.UP)
         {
             actorModel.transform.localEulerAngles = new Vector3(0, 0, 0);
             actorModel.transform.Rotate(0, 0, 90);
             modelOrintation = Directions.UP;
+            transform.position = new Vector2(transform.position.x > 0 ? (int)transform.position.x + 0.5f : (int)transform.position.x - 0.5f, transform.position.y );
+
         }
         else if (direction == Directions.DOWN && modelOrintation != Directions.DOWN)
         {
             actorModel.transform.localEulerAngles = new Vector3(0, 0, 0);
             actorModel.transform.Rotate(0, 0, -90);
             modelOrintation = Directions.DOWN;
+            transform.position = new Vector2(transform.position.x > 0 ? (int)transform.position.x + 0.5f : (int)transform.position.x - 0.5f, transform.position.y);
         }
         else if (direction == Directions.STOP && modelOrintation != Directions.STOP)
         {
             anim.SetBool("isMoving", false);
             modelOrintation = Directions.STOP;
             anim.SetBool("isMoving", false);
+            transform.position = new Vector2(transform.position.x > 0 ? (int)transform.position.x + 0.5f : (int)transform.position.x - 0.5f, 
+                                             transform.position.y > 0 ? (int)transform.position.y + 0.5f : (int)transform.position.y - 0.5f);
 
         }
 

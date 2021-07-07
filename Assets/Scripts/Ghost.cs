@@ -32,7 +32,7 @@ public abstract class Ghost : Actor
     public bool isStuck = false;
     public Vector3 lastPos { get; set; }
 
-    Collider2D lastTrigger;
+    triggerDir lastTrigger;
 
     public virtual IEnumerator FleeTarget()
     {
@@ -114,7 +114,7 @@ public abstract class Ghost : Actor
 
             if (lastState != state)
             {
-               unityEvent.Invoke();
+                unityEvent.Invoke();
             }
             yield return new WaitForSeconds(0.1667f);
         }
@@ -217,21 +217,22 @@ public abstract class Ghost : Actor
         if (other.gameObject.layer == 12)
         {
             GetRouteToTarget((Vector2)transform.position, other.gameObject.GetComponent<triggerDir>().directions);
-            lastTrigger = other;
+            lastTrigger = other.GetComponent<triggerDir>();
         }
     }
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.layer == 12 && isStuck )
+        int layermask = 1 << 8;
+        if (other.gameObject.layer == layermask)
         {
-            Unstuck(other);
+            Unstuck(other.GetComponent<triggerDir>());
         }
     }
 
-    private void Unstuck(Collider2D other)
+    private void Unstuck(triggerDir other)
     {
         if (!hasStarted) return;
-        GetRouteToTarget((Vector2)transform.position, other.gameObject.GetComponent<triggerDir>().directions);
+        GetRouteToTarget((Vector2)transform.position, other.directions);
         isStuck = false;
     }
 
@@ -260,16 +261,15 @@ public abstract class Ghost : Actor
         {
             _speed = speed;
         }
-        Vector3 offset = new Vector3(0.05f, 0.05f, 0);
-        if ((transform.position.x < (lastPos.x + offset.x) || transform.position.x > (lastPos.x - offset.x) ||
-            transform.position.y < (lastPos.y + offset.y) || transform.position.y > (lastPos.y - offset.y)) && hasStarted)
+      /*  Vector3 offset = new Vector3(0.05f, 0.05f, 0);
+        if ( ((int)transform.position.x == (int)lastPos.x  ||
+            (int)transform.position.y < (int)lastPos.y) && hasStarted)  
         {
             isStuck = true;
         }
-        else lastPos = transform.position;
-        base.ActorMovement(_speed);
+        else lastPos = transform.position;*/
 
-        if (isStuck) Unstuck(lastTrigger);
+
 
         Animator anim = this.GetComponent<Animator>();
         if (direction != lastDirection && state != GhostState.FLEEING)
@@ -296,29 +296,43 @@ public abstract class Ghost : Actor
             {
                 case (Directions.LEFT):
                     anim.SetBool("moveL", true);
+                    transform.position = new Vector2(transform.position.x, transform.position.y > 0 ? (int)transform.position.y + 0.5f : (int)transform.position.y - 0.5f);
                     break;
                 case (Directions.RIGHT):
                     anim.SetBool("moveR", true);
+                    transform.position = new Vector2(transform.position.x, transform.position.y > 0 ? (int)transform.position.y + 0.5f : (int)transform.position.y - 0.5f);
                     break;
                 case (Directions.UP):
                     anim.SetBool("moveU", true);
+                    transform.position = new Vector2(transform.position.x > 0 ? (int)transform.position.x + 0.5f : (int)transform.position.x - 0.5f, transform.position.y);
                     break;
                 case (Directions.DOWN):
                     anim.SetBool("moveD", true);
+                    transform.position = new Vector2(transform.position.x > 0 ? (int)transform.position.x + 0.5f : (int)transform.position.x - 0.5f, transform.position.y);
                     break;
                 default:
+                    transform.position = new Vector2(transform.position.x > 0 ? (int)transform.position.x + 0.5f : (int)transform.position.x - 0.5f,
+                                                     transform.position.y > 0 ? (int)transform.position.y + 0.5f : (int)transform.position.y - 0.5f);
                     break;
             }
         }
+        base.ActorMovement(_speed);
     }
     public virtual void Update()
     {
 
     }
 
-    public virtual void OnApplicationQuit()
+    public override void RestartGame(int lives)
+    {
+        base.RestartGame(lives);
+        hasStarted = false;
+        
+    }
+    public override void OnApplicationQuit()
     {
         unityEvent.RemoveListener(OnStateChange);
+        base.OnApplicationQuit();
     }
     public virtual void Start()
     {
@@ -396,5 +410,11 @@ public abstract class Ghost : Actor
 
         lastState = state;
 
+    }
+    public override IEnumerator WaitForStart()
+    {
+        yield return null;
+        hasStarted = true;
+        ActorMovement();
     }
 }
