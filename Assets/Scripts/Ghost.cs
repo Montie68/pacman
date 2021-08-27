@@ -327,6 +327,7 @@ public abstract class Ghost : Actor
     {
         base.RestartGame(lives);
         hasStarted = false;
+        StartCoroutine(WaitForStart());
         
     }
     public override void OnApplicationQuit()
